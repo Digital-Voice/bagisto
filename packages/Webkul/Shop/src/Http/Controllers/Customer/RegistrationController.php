@@ -50,6 +50,7 @@ class RegistrationController extends Controller
             'first_name',
             'last_name',
             'email',
+            'phone',
             'password_confirmation',
             'is_subscribed',
         ]), [

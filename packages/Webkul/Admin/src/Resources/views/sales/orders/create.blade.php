@@ -37,7 +37,7 @@
                 {!! view_render_event('bagisto.admin.sales.order.create.left_component.before') !!}
                 
                 <div
-                    class="flex flex-1 flex-col gap-2 overflow-y-auto max-xl:flex-auto"
+                    class="flex flex-col flex-1 gap-2 overflow-y-auto max-xl:flex-auto"
                     id="steps-container"
                 >
                     <!-- Cart Items Component -->
@@ -194,6 +194,17 @@
                     },
 
                     addToCart(params) {
+                        if (! localStorage.getItem('customer_phone')) {
+                            return this.$emitter.emit('open-phone-number-modal', {                            
+                                action: () => this.pleaseAddToCart(params),
+                                cancel: () => {},
+                            });
+                        }
+
+                        this.pleaseAddToCart(params);
+                    },
+
+                    pleaseAddToCart(params) {
                         let formData = {};
 
                         if (params.additional?.attributes) {
@@ -213,6 +224,8 @@
 
                             this.$refs.productConfigurationDrawer.close();
                         }
+
+                        formData.append('phone', localStorage.getItem('customer_phone'));
 
                         this.isAddingToCart = true;
 

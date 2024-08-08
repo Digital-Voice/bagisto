@@ -310,6 +310,8 @@
                     countries: [],
 
                     states: null,
+
+                    cart: [],
                 }
             },
 
@@ -326,6 +328,18 @@
             },
 
             methods: {
+                getCart() {
+                    this.$axios.get('{{ route('shop.api.checkout.cart.index') }}')
+                        .then(response => {
+                            this.cart = response.data.data;
+
+                            if (response.data.message) {
+                                this.$emitter.emit('add-flash', { type: 'info', message: response.data.message });
+                            }
+                        })
+                        .catch(error => {});
+                },
+
                 getCountries() {
                     this.$axios.get("{{ route('shop.api.core.countries') }}")
                         .then(response => {

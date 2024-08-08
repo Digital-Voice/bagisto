@@ -94,6 +94,9 @@
             <!-- Flash Message Blade Component -->
             <x-shop::flash-group />
 
+            <!-- Phone Number Modal Blade Component -->
+            <x-shop::modal.phone-number />
+
             <!-- Confirm Modal Blade Component -->
             <x-shop::modal.confirm />
 

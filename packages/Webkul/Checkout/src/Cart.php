@@ -140,6 +140,7 @@ class Cart
                 'customer_first_name' => $customer->first_name,
                 'customer_last_name'  => $customer->last_name,
                 'customer_email'      => $customer->email,
+                'customer_phone'      => $customer->phone,
             ]);
         }
 
@@ -258,7 +259,7 @@ class Cart
         Event::dispatch('checkout.cart.add.before', $product->id);
 
         if (! $this->cart) {
-            $this->createCart([]);
+            $this->createCart(['customer_phone' => $data['phone']]);
         }
 
         $cartProducts = $product->getTypeInstance()->prepareForCart($data);

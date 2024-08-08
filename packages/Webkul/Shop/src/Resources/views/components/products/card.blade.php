@@ -58,7 +58,7 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.average_ratings.after') !!}
 
-                <div class="action-items bg-black">
+                <div class="bg-black action-items">
                     <!-- Product Sale Badge -->
                     <p
                         class="absolute top-1.5 inline-block rounded-[44px] bg-red-600 px-2.5 text-sm text-white max-sm:rounded-l-none max-sm:rounded-r-xl max-sm:px-2 max-sm:py-0.5 max-sm:text-xs ltr:left-1.5 max-sm:ltr:left-0 rtl:right-5 max-sm:rtl:right-0"
@@ -75,7 +75,7 @@
                         @lang('shop::app.components.products.card.new')
                     </p>
 
-                    <div class="opacity-0 transition-all duration-300 group-hover:bottom-0 group-hover:opacity-100 max-lg:opacity-100 max-sm:opacity-100">
+                    <div class="transition-all duration-300 opacity-0 group-hover:bottom-0 group-hover:opacity-100 max-lg:opacity-100 max-sm:opacity-100">
 
                         {!! view_render_event('bagisto.shop.components.products.card.wishlist_option.before') !!}
 
@@ -135,7 +135,7 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <!-- Product Actions Section -->
-                <div class="action-items flex items-center justify-between opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 max-md:hidden">
+                <div class="flex items-center justify-between transition-all duration-300 ease-in-out opacity-0 action-items group-hover:opacity-100 max-md:hidden">
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
@@ -186,7 +186,7 @@
 
         <!-- List Card -->
         <div
-            class="relative flex max-w-max grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap"
+            class="relative flex grid-cols-2 gap-4 overflow-hidden rounded max-w-max max-sm:flex-wrap"
             v-else
         >
             <div class="group relative max-h-[258px] max-w-[250px] overflow-hidden"> 
@@ -207,7 +207,7 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.image.after') !!}
 
-                <div class="action-items bg-black">
+                <div class="bg-black action-items">
                     <p
                         class="absolute top-5 inline-block rounded-[44px] bg-red-500 px-2.5 text-sm text-white ltr:left-5 max-sm:ltr:left-2 rtl:right-5"
                         v-if="product.on_sale"
@@ -222,7 +222,7 @@
                         @lang('shop::app.components.products.card.new')
                     </p>
 
-                    <div class="opacity-0 transition-all duration-300 group-hover:bottom-0 group-hover:opacity-100 max-sm:opacity-100">
+                    <div class="transition-all duration-300 opacity-0 group-hover:bottom-0 group-hover:opacity-100 max-sm:opacity-100">
 
                         {!! view_render_event('bagisto.shop.components.products.card.wishlist_option.before') !!}
 
@@ -425,11 +425,23 @@
                 },
 
                 addToCart() {
+                    if (! localStorage.getItem('customer_phone')) {
+                        return this.$emitter.emit('open-phone-number-modal', {                            
+                            action: this.pleaseAddToCart,
+                            cancel: () => {},
+                        });
+                    }
+
+                    this.pleaseAddToCart();
+                },
+
+                pleaseAddToCart() {
                     this.isAddingToCart = true;
 
                     this.$axios.post('{{ route("shop.api.checkout.cart.store") }}', {
-                            'quantity': 1,
+                            'phone': localStorage.getItem('customer_phone'),
                             'product_id': this.product.id,
+                            'quantity': 1,
                         })
                         .then(response => {
                             if (response.data.message) {
@@ -451,7 +463,7 @@
                             
                             this.isAddingToCart = false;
                         });
-                },
+                }
             },
         });
     </script>

@@ -31,7 +31,7 @@
                 >
                     <form @submit="handleSubmit($event, addAddressToCart)">
                         <!-- Billing Address Header -->
-                        <div class="mb-4 flex items-center justify-between max-md:mb-2">
+                        <div class="flex items-center justify-between mb-4 max-md:mb-2">
                             <h2 class="text-xl font-medium max-sm:text-base max-sm:font-normal">
                                 @lang('shop::app.checkout.onepage.address.billing-address')
                             </h2>
@@ -44,7 +44,7 @@
                                 v-for="address in customerSavedAddresses.billing"
                             >
                                 <!-- Actions -->
-                                <div class="absolute top-5 flex gap-2 ltr:right-5 rtl:left-5">
+                                <div class="absolute flex gap-2 top-5 ltr:right-5 rtl:left-5">
                                     <x-shop::form.control-group class="!mb-0 flex items-center gap-2.5">
                                         <x-shop::form.control-group.control
                                             type="radio"
@@ -60,7 +60,7 @@
 
                                     <!-- Edit Icon -->
                                     <span
-                                        class="icon-edit cursor-pointer text-2xl"
+                                        class="text-2xl cursor-pointer icon-edit"
                                         @click="
                                             selectedAddressForEdit = address;
                                             activeAddressForm = 'billing';
@@ -71,10 +71,10 @@
 
                                 <!-- Details -->
                                 <label
-                                    class="block cursor-pointer rounded-xl p-5 max-sm:rounded-lg"
+                                    class="block p-5 cursor-pointer rounded-xl max-sm:rounded-lg"
                                     :for="`billing_address_id_${address.id}`"
                                 >
-                                    <span class="icon-checkout-address text-6xl text-navyBlue max-sm:text-5xl"></span>
+                                    <span class="text-6xl icon-checkout-address text-navyBlue max-sm:text-5xl"></span>
 
                                     <div class="flex items-center justify-between">
                                         <p class="text-base font-medium">
@@ -137,7 +137,7 @@
                                 />
 
                                 <label
-                                    class="cursor-pointer select-none text-base text-zinc-500 max-md:text-sm max-sm:text-xs ltr:pl-0 rtl:pr-0"
+                                    class="text-base cursor-pointer select-none text-zinc-500 max-md:text-sm max-sm:text-xs ltr:pl-0 rtl:pr-0"
                                     for="use_for_shipping"
                                 >
                                     @lang('shop::app.checkout.onepage.address.same-as-billing')
@@ -151,7 +151,7 @@
                                 v-if="! useBillingAddressForShipping"
                             >
                                 <!-- Shipping Address Header -->
-                                <div class="mb-4 flex items-center justify-between">
+                                <div class="flex items-center justify-between mb-4">
                                     <h2 class="text-xl font-medium max-md:text-lg max-sm:text-base">
                                         @lang('shop::app.checkout.onepage.address.shipping-address')
                                     </h2>
@@ -164,7 +164,7 @@
                                         v-for="address in customerSavedAddresses.shipping"
                                     >
                                         <!-- Actions -->
-                                        <div class="absolute top-5 flex gap-5 ltr:right-5 rtl:left-5">
+                                        <div class="absolute flex gap-5 top-5 ltr:right-5 rtl:left-5">
                                             <x-shop::form.control-group class="!mb-0 flex items-center gap-2.5">
                                                 <x-shop::form.control-group.control
                                                     type="radio"
@@ -180,7 +180,7 @@
 
                                             <!-- Edit Icon -->
                                             <span
-                                                class="icon-edit cursor-pointer text-2xl"
+                                                class="text-2xl cursor-pointer icon-edit"
                                                 @click="
                                                     selectedAddressForEdit = address;
                                                     activeAddressForm = 'shipping';
@@ -191,10 +191,10 @@
 
                                         <!-- Details -->
                                         <label
-                                            class="block cursor-pointer rounded-xl p-5 max-md:rounded-lg"
+                                            class="block p-5 cursor-pointer rounded-xl max-md:rounded-lg"
                                             :for="`shipping_address_id_${address.id}`"
                                         >
-                                            <span class="icon-checkout-address text-6xl text-navyBlue max-sm:text-5xl"></span>
+                                            <span class="text-6xl icon-checkout-address text-navyBlue max-sm:text-5xl"></span>
 
                                             <div class="flex items-center justify-between">
                                                 <p class="text-base font-medium">
@@ -244,7 +244,7 @@
                         </template>
 
                         <!-- Proceed Button -->
-                        <div class="mt-4 flex justify-end max-md:my-4">
+                        <div class="flex justify-end mt-4 max-md:my-4">
                             <x-shop::button
                                 class="primary-button rounded-2xl px-11 py-3 max-md:rounded-lg max-sm:w-full max-sm:max-w-full max-sm:py-1.5"
                                 :title="trans('shop::app.checkout.onepage.address.proceed')"
@@ -264,7 +264,7 @@
                 >
                     <form @submit="handleSubmit($event, updateOrCreateAddress)">
                         <!-- Billing Address Header -->
-                        <div class="mb-4 flex items-center justify-between">
+                        <div class="flex items-center justify-between mb-4">
                             <h2 class="text-xl font-medium max-md:text-base max-sm:font-normal">
                                 <template v-if="activeAddressForm == 'billing'">
                                     @lang('shop::app.checkout.onepage.address.billing-address')
@@ -276,11 +276,11 @@
                             </h2>
 
                             <span
-                                class="flex cursor-pointer justify-end"
+                                class="flex justify-end cursor-pointer"
                                 v-show="customerSavedAddresses.billing.length && ['billing', 'shipping'].includes(activeAddressForm)"
                                 @click="selectedAddressForEdit = null; activeAddressForm = null"
                             >
-                                <span class="icon-arrow-left text-2xl max-md:hidden"></span>
+                                <span class="text-2xl icon-arrow-left max-md:hidden"></span>
 
                                 @lang('shop::app.checkout.onepage.address.back')
                             </span>
@@ -305,7 +305,7 @@
                             />
 
                             <label
-                                class="cursor-pointer select-none text-base text-zinc-500 max-md:text-sm max-sm:text-xs ltr:pl-0 rtl:pr-0"
+                                class="text-base cursor-pointer select-none text-zinc-500 max-md:text-sm max-sm:text-xs ltr:pl-0 rtl:pr-0"
                                 for="save_address"
                             >
                                 @lang('shop::app.checkout.onepage.address.save-address')
@@ -313,7 +313,7 @@
                         </x-shop::form.control-group>
 
                         <!-- Save Button -->
-                        <div class="mt-4 flex justify-end">
+                        <div class="flex justify-end mt-4">
                             <x-shop::button
                                 class="primary-button rounded-2xl px-11 py-3 max-md:rounded-lg max-sm:w-full max-sm:max-w-full max-sm:py-1.5"
                                 :title="trans('shop::app.checkout.onepage.address.save')"
@@ -347,7 +347,19 @@
 
                     activeAddressForm: null,
 
-                    selectedAddressForEdit: null,
+                    selectedAddressForEdit: {
+                        id: 0,
+                        company_name: '',
+                        first_name: this.cart.customer_first_name,
+                        last_name: this.cart.customer_last_name,
+                        email: this.cart.customer_email,
+                        address: [],
+                        country: '',
+                        state: '',
+                        city: '',
+                        postcode: '',
+                        phone: this.cart.customer_phone,
+                    },
 
                     saveAddress: false,
 

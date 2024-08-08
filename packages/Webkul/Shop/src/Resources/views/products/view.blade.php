@@ -118,7 +118,7 @@
                                                 href="{{ Storage::url($product[$customAttributeValue['code']]) }}" 
                                                 download="{{ $customAttributeValue['label'] }}"
                                             >
-                                                <span class="icon-download text-2xl"></span>
+                                                <span class="text-2xl icon-download"></span>
                                             </a>
                                         @elseif ($customAttributeValue['type'] == 'image')
                                             <a 
@@ -126,7 +126,7 @@
                                                 download="{{ $customAttributeValue['label'] }}"
                                             >
                                                 <img 
-                                                    class="h-5 min-h-5 w-5 min-w-5" 
+                                                    class="w-5 h-5 min-h-5 min-w-5" 
                                                     src="{{ Storage::url($customAttributeValue['value']) }}" 
                                                 />
                                             </a>
@@ -205,7 +205,7 @@
                                             href="{{ Storage::url($product[$customAttributeValue['code']]) }}"
                                             download="{{ $customAttributeValue['label'] }}"
                                         >
-                                            <span class="icon-download text-2xl"></span>
+                                            <span class="text-2xl icon-download"></span>
                                         </a>
                                     @elseif ($customAttributeValue['type'] == 'image')
                                         <a
@@ -213,7 +213,7 @@
                                             download="{{ $customAttributeValue['label'] }}"
                                         >
                                             <img 
-                                                class="h-5 min-h-5 w-5 min-w-5" 
+                                                class="w-5 h-5 min-h-5 min-w-5" 
                                                 src="{{ Storage::url($customAttributeValue['value']) }}"
                                                 alt="Product Image"
                                             />
@@ -293,7 +293,7 @@
                     >
 
                     <div class="container px-[60px] max-1180:px-0">
-                        <div class="mt-12 flex gap-9 max-1180:flex-wrap max-lg:mt-0 max-sm:gap-y-4">
+                        <div class="flex mt-12 gap-9 max-1180:flex-wrap max-lg:mt-0 max-sm:gap-y-4">
                             <!-- Gallery Blade Inclusion -->
                             @include('shop::products.view.gallery')
 
@@ -440,7 +440,7 @@
                                 {!! view_render_event('bagisto.shop.products.view.additional_actions.before', ['product' => $product]) !!}
 
                                 <!-- Share Buttons -->
-                                <div class="mt-10 flex gap-9 max-md:mt-4 max-md:flex-wrap max-sm:justify-center max-sm:gap-3">
+                                <div class="flex mt-10 gap-9 max-md:mt-4 max-md:flex-wrap max-sm:justify-center max-sm:gap-3">
                                     {!! view_render_event('bagisto.shop.products.view.compare.before', ['product' => $product]) !!}
 
                                     <div
@@ -451,7 +451,7 @@
                                     >
                                         @if (core()->getConfigData('catalog.products.settings.compare_option'))
                                             <span
-                                                class="icon-compare text-2xl"
+                                                class="text-2xl icon-compare"
                                                 role="presentation"
                                             ></span>
 
@@ -492,11 +492,24 @@
 
                 methods: {
                     addToCart(params) {
+                        if (! localStorage.getItem('customer_phone')) {
+                            return this.$emitter.emit('open-phone-number-modal', {                            
+                                action: () => this.pleaseAddToCart(params),
+                                cancel: () => {},
+                            });
+                        }
+
+                        this.pleaseAddToCart(params);
+                    },
+
+                    pleaseAddToCart(params) {
                         const operation = this.is_buy_now ? 'buyNow' : 'addToCart';
 
                         this.isStoring[operation] = true;
 
                         let formData = new FormData(this.$refs.formData);
+                        
+                        formData.append('phone', localStorage.getItem('customer_phone'));
 
                         this.ensureQuantity(formData);
 

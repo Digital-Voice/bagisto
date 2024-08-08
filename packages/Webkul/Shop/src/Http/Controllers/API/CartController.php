@@ -49,6 +49,7 @@ class CartController extends APIController
     {
         $this->validate(request(), [
             'product_id' => 'required|integer|exists:products,id',
+            'phone' => 'required',
         ]);
 
         $product = $this->productRepository->with('parent')->findOrFail(request()->input('product_id'));

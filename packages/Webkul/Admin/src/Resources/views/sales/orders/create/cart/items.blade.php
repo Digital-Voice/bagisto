@@ -19,7 +19,7 @@
         type="text/x-template"
         id="v-cart-items-template"
     >
-        <div class="box-shadow rounded bg-white dark:bg-gray-900">
+        <div class="bg-white rounded box-shadow dark:bg-gray-900">
             <div class="flex justify-between p-4">
                 <p class="text-base font-semibold text-gray-800 dark:text-white">
                     @lang('admin::app.sales.orders.create.cart.items.title')
@@ -28,7 +28,7 @@
                 <div class="flex items-center gap-4">
                     <template v-if="isAddingToCart || isUpdating">
                         <img
-                            class="h-5 w-5 animate-spin"
+                            class="w-5 h-5 animate-spin"
                             src="{{ bagisto_asset('images/spinner.svg') }}"
                         />
                     </template>
@@ -70,7 +70,7 @@
                 v-if="cart.items.length"
             >
                 <div
-                    class="row grid gap-4 border-b bg-white p-4 transition-all hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:bg-gray-950"
+                    class="grid gap-4 p-4 transition-all bg-white border-b row hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:bg-gray-950"
                     v-for="item in cart.items"
                 >
                     <!-- Item Information -->
@@ -102,7 +102,7 @@
 
                             <div class="flex flex-col gap-1.5">
                                 <!-- Item Name -->
-                                <p class="whitespace-nowrap text-base font-semibold text-gray-800 dark:text-white">
+                                <p class="text-base font-semibold text-gray-800 whitespace-nowrap dark:text-white">
                                     @{{ item.name }}
                                 </p>
 
@@ -122,7 +122,7 @@
                                 >
                                     <!-- Details Toggler -->
                                     <p
-                                        class="flex cursor-pointer items-center gap-1 text-sm text-gray-800 dark:text-white"
+                                        class="flex items-center gap-1 text-sm text-gray-800 cursor-pointer dark:text-white"
                                         @click="item.option_show = ! item.option_show"
                                     >
                                         @lang('admin::app.sales.orders.create.cart.items.see-details')
@@ -152,7 +152,7 @@
                         </div>
 
                         <div class="flex flex-col gap-2">
-                            <p class="flex flex-col gap-1 text-right text-base font-semibold text-gray-800 dark:text-white">
+                            <p class="flex flex-col gap-1 text-base font-semibold text-right text-gray-800 dark:text-white">
                                 <template v-if="displayTax.subtotal == 'including_tax'">
                                     @{{ item.formatted_total_incl_tax }}
                                 </template>
@@ -177,7 +177,7 @@
                             <x-admin::quantity-changer
                                 ::name="'qty[' + item.id + ']'"
                                 ::value="item.quantity"
-                                class="w-max gap-x-4 rounded-l px-4 py-1"
+                                class="px-4 py-1 rounded-l w-max gap-x-4"
                                 @change="updateItem(item, $event)"
                             />
                         </div>
@@ -186,7 +186,7 @@
                     <!-- Item Actions -->
                     <div class="flex justify-end gap-2.5">
                         <p
-                            class="cursor-pointer text-red-600 transition-all hover:underline"
+                            class="text-red-600 transition-all cursor-pointer hover:underline"
                             @click="removeItem(item)"
                         >
                             @lang('admin::app.sales.orders.create.cart.items.delete')
@@ -200,7 +200,7 @@
                 class="grid justify-center justify-items-center gap-3.5 px-2.5 py-10"
                 v-else
             >
-                <img src="{{ bagisto_asset('images/icon-add-product.svg') }}" class="h-20 w-20 dark:mix-blend-exclusion dark:invert">
+                <img src="{{ bagisto_asset('images/icon-add-product.svg') }}" class="w-20 h-20 dark:mix-blend-exclusion dark:invert">
                 
                 <div class="flex flex-col items-center gap-1.5">
                     <p class="text-base font-semibold text-gray-400">
@@ -306,13 +306,13 @@
                                 as="div"
                             >
                                 <form @submit="handleSubmit($event, addToCart)">
-                                    <div class="grid place-content-start gap-2 text-right">
+                                    <div class="grid gap-2 text-right place-content-start">
                                         <p class="font-semibold text-gray-800 dark:text-white">
                                             @{{ product.formatted_price }}
                                         </p>
 
                                         <x-admin::form.control-group class="!mb-0">
-                                            <x-admin::form.control-group.label class="required justify-end">
+                                            <x-admin::form.control-group.label class="justify-end required">
                                                 @lang('admin::app.sales.orders.create.cart.items.search.qty')
                                             </x-admin::form.control-group.label>
 
@@ -336,7 +336,7 @@
                                         </x-admin::form.control-group>
 
                                         <button
-                                            class="cursor-pointer text-sm text-blue-600 transition-all hover:underline"
+                                            class="text-sm text-blue-600 transition-all cursor-pointer hover:underline"
                                             :disabled="! product.is_saleable"
                                         >
                                             @lang('admin::app.sales.orders.create.cart.items.search.add-to-cart')
@@ -355,7 +355,7 @@
                         <!-- Placeholder Image -->
                         <img
                             src="{{ bagisto_asset('images/icon-add-product.svg') }}"
-                            class="h-20 w-20 dark:mix-blend-exclusion dark:invert"
+                            class="w-20 h-20 dark:mix-blend-exclusion dark:invert"
                         />
 
                         <!-- Add Variants Information -->
@@ -433,8 +433,20 @@
                 },
 
                 addToCart(params) {
+                    if (! localStorage.getItem('customer_phone')) {
+                        return this.$emitter.emit('open-phone-number-modal', {                            
+                            action: () => this.pleaseAddToCart(params),
+                            cancel: () => {},
+                        });
+                    }
+
+                    this.pleaseAddToCart(params);
+                },
+
+                pleaseAddToCart(params) {
                     this.$emit('add-to-cart', {
                         product: this.searchedProducts.find(product => product.id == params.product_id),
+                        phone: localStorage.getItem('customer_phone'),
                         qty: params.qty
                     });
 

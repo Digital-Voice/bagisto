@@ -22,7 +22,10 @@ class CartResource extends JsonResource
         return [
             'id'                                 => $this->id,
             'is_guest'                           => $this->is_guest,
-            'customer_id'                        => $this->customer_id,
+            'customer_email'                     => $this->customer_email,
+            'customer_phone'                     => $this->customer_phone,
+            'customer_first_name'                => $this->customer_first_name,
+            'customer_last_name'                 => $this->customer_last_name,
             'items_count'                        => $this->items_count,
             'items_qty'                          => $this->items_qty,
             'applied_taxes'                      => $taxes,

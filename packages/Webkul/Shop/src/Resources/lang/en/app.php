@@ -52,6 +52,7 @@ return [
             'button-title'                => 'Register',
             'confirm-pass'                => 'Confirm Password',
             'email'                       => 'Email',
+            'phone'                       => 'Telephone',
             'first-name'                  => 'First Name',
             'footer'                      => '© Copyright 2010 - :current_year, Webkul Software (Registered in India). All rights reserved.',
             'form-signup-text'            => 'If you are new to our store, we glad to have you as member.',
