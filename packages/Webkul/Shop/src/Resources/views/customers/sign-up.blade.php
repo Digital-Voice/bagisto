@@ -56,7 +56,7 @@
                 <x-shop::form :action="route('shop.customers.register.store')">
                     {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
 
-                    <div class="flex gap-x-2">
+                    <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
                         <x-shop::form.control-group>
                             <x-shop::form.control-group.label class="required">
                                 @lang('shop::app.customers.signup-form.first-name')
@@ -102,7 +102,7 @@
                         {!! view_render_event('bagisto.shop.customers.signup_form.last_name.after') !!}
                     </div>
 
-                    <div class="flex gap-x-2">
+                    <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
                         <x-shop::form.control-group>
                             <x-shop::form.control-group.label>
                                 @lang('shop::app.customers.signup-form.email')
@@ -112,7 +112,7 @@
                                 type="email"
                                 class="px-6 py-4 max-md:py-3 max-sm:py-2"
                                 name="email"
-                                rules="nullable|email"
+                                rules="email"
                                 :value="old('email')"
                                 :label="trans('shop::app.customers.signup-form.email')"
                                 placeholder="email@example.com"
@@ -148,7 +148,7 @@
                         {!! view_render_event('bagisto.shop.customers.signup_form.phone.after') !!}
                     </div>
 
-                    <div class="flex gap-x-2">
+                    <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
                         <x-shop::form.control-group class="mb-6">
                             <x-shop::form.control-group.label class="required">
                                 @lang('shop::app.customers.signup-form.password')

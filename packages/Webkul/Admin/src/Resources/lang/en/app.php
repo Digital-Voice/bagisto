@@ -126,6 +126,24 @@ return [
     ],
 
     'sales' => [
+        'carts' => [
+            'index' => [
+                'title' => 'Carts',
+
+                'datagrid' => [
+                    'cart-id' => 'Cart ID',
+                    'id' => '#:id',
+                    'phone' => 'Phone',
+                ],
+            ],
+
+            'view' => [
+                'cart-date' => 'Cart Date',
+                'cart-information' => 'Cart Information',
+                'title' => 'Cart #:cart_id',
+            ],
+        ],
+
         'orders' => [
             'index' => [
                 'create-btn' => 'Create Order',
@@ -4065,6 +4083,7 @@ return [
                 'attribute-families'       => 'Attribute Families',
                 'attributes'               => 'Attributes',
                 'campaigns'                => 'Campaigns',
+                'carts'                    => 'Carts',
                 'catalog'                  => 'Catalog',
                 'categories'               => 'Categories',
                 'channels'                 => 'Channels',

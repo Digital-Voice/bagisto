@@ -49,6 +49,9 @@ Route::group(['middleware' => ['admin'], 'prefix' => config('app.admin_url')], f
             Route::get('search', 'search')->name('admin.sales.orders.search');
         });
 
+        Route::get('carts', [OrderController::class, 'carts'])->name('admin.sales.carts.index');
+        Route::get('carts/view/{id}', [OrderController::class, 'cart'])->name('admin.sales.carts.view');
+
         /**
          * Refunds routes.
          */

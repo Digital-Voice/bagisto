@@ -70,25 +70,47 @@
                 {!! view_render_event('bagisto.shop.checkout.onepage.address.form.last_name.after') !!}
             </div>
 
-            <!-- Email -->
-            <x-shop::form.control-group>
-                <x-shop::form.control-group.label class="required !mt-0">
-                    @lang('shop::app.checkout.onepage.address.email')
-                </x-shop::form.control-group.label>
+            <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
+                <!-- Email -->
+                <x-shop::form.control-group>
+                    <x-shop::form.control-group.label class="!mt-0">
+                        @lang('shop::app.checkout.onepage.address.email')
+                    </x-shop::form.control-group.label>
 
-                <x-shop::form.control-group.control
-                    type="email"
-                    ::name="controlName + '.email'"
-                    ::value="address.email"
-                    rules="required|email"
-                    :label="trans('shop::app.checkout.onepage.address.email')"
-                    placeholder="email@example.com"
-                />
+                    <x-shop::form.control-group.control
+                        type="email"
+                        ::name="controlName + '.email'"
+                        ::value="address.email"
+                        rules="email"
+                        :label="trans('shop::app.checkout.onepage.address.email')"
+                        placeholder="email@example.com"
+                    />
 
-                <x-shop::form.control-group.error ::name="controlName + '.email'" />
-            </x-shop::form.control-group>
+                    <x-shop::form.control-group.error ::name="controlName + '.email'" />
+                </x-shop::form.control-group>
 
-            {!! view_render_event('bagisto.shop.checkout.onepage.address.form.email.after') !!}
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.email.after') !!}
+
+                <!-- Phone Number -->
+                <x-shop::form.control-group>
+                    <x-shop::form.control-group.label class="required !mt-0">
+                        @lang('shop::app.checkout.onepage.address.telephone')
+                    </x-shop::form.control-group.label>
+
+                    <x-shop::form.control-group.control
+                        type="text"
+                        ::name="controlName + '.phone'"
+                        ::value="address.phone"
+                        rules="required|numeric"
+                        :label="trans('shop::app.checkout.onepage.address.telephone')"
+                        :placeholder="trans('shop::app.checkout.onepage.address.telephone')"
+                    />
+
+                    <x-shop::form.control-group.error ::name="controlName + '.phone'" />
+                </x-shop::form.control-group>
+
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.phone.after') !!}
+            </div>
 
             <!-- Street Address -->
             <x-shop::form.control-group>
@@ -130,6 +152,7 @@
 
             {!! view_render_event('bagisto.shop.checkout.onepage.address.form.address.after') !!}
 
+            @if(core()->isCountryRequired() && core()->isPostCodeRequired())
             <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
                 <!-- Country -->
                 <x-shop::form.control-group class="!mb-4">
@@ -251,26 +274,75 @@
 
                 {!! view_render_event('bagisto.shop.checkout.onepage.address.form.postcode.after') !!}
             </div>
+            @else
+            <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
+                <!-- State -->
+                <x-shop::form.control-group>
+                    <x-shop::form.control-group.label class="{{ core()->isStateRequired() ? 'required' : '' }} !mt-0">
+                        @lang('shop::app.checkout.onepage.address.state')
+                    </x-shop::form.control-group.label>
 
-            <!-- Phone Number -->
-            <x-shop::form.control-group>
-                <x-shop::form.control-group.label class="required !mt-0">
-                    @lang('shop::app.checkout.onepage.address.telephone')
-                </x-shop::form.control-group.label>
+                    <template v-if="states">
+                        <template v-if="haveStates">
+                            <x-shop::form.control-group.control
+                                type="select"
+                                ::name="controlName + '.state'"
+                                rules="{{ core()->isStateRequired() ? 'required' : '' }}"
+                                ::value="address.state"
+                                :label="trans('shop::app.checkout.onepage.address.state')"
+                                :placeholder="trans('shop::app.checkout.onepage.address.state')"
+                            >
+                                <option value="">
+                                    @lang('shop::app.checkout.onepage.address.select-state')
+                                </option>
 
-                <x-shop::form.control-group.control
-                    type="text"
-                    ::name="controlName + '.phone'"
-                    ::value="address.phone"
-                    rules="required|numeric"
-                    :label="trans('shop::app.checkout.onepage.address.telephone')"
-                    :placeholder="trans('shop::app.checkout.onepage.address.telephone')"
-                />
+                                <option
+                                    v-for='(state, index) in states[selectedCountry]'
+                                    :value="state.code"
+                                >
+                                    @{{ state.default_name }}
+                                </option>
+                            </x-shop::form.control-group.control>
+                        </template>
 
-                <x-shop::form.control-group.error ::name="controlName + '.phone'" />
-            </x-shop::form.control-group>
+                        <template v-else>
+                            <x-shop::form.control-group.control
+                                type="text"
+                                ::name="controlName + '.state'"
+                                ::value="address.state"
+                                rules="{{ core()->isStateRequired() ? 'required' : '' }}"
+                                :label="trans('shop::app.checkout.onepage.address.state')"
+                                :placeholder="trans('shop::app.checkout.onepage.address.state')"
+                            />
+                        </template>
+                    </template>
 
-            {!! view_render_event('bagisto.shop.checkout.onepage.address.form.phone.after') !!}
+                    <x-shop::form.control-group.error ::name="controlName + '.state'" />
+                </x-shop::form.control-group>
+
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.state.after') !!}
+                
+                <!-- City -->
+                <x-shop::form.control-group>
+                    <x-shop::form.control-group.label class="required !mt-0">
+                        @lang('shop::app.checkout.onepage.address.city')
+                    </x-shop::form.control-group.label>
+
+                    <x-shop::form.control-group.control
+                        type="text"
+                        ::name="controlName + '.city'"
+                        ::value="address.city"
+                        rules="required"
+                        :label="trans('shop::app.checkout.onepage.address.city')"
+                        :placeholder="trans('shop::app.checkout.onepage.address.city')"
+                    />
+
+                    <x-shop::form.control-group.error ::name="controlName + '.city'" />
+                </x-shop::form.control-group>
+
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.city.after') !!}
+            </div>
+            @endif
         </div>
     </script>
 

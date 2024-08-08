@@ -33,6 +33,7 @@ return [
             'button-title'        => 'Sign In',
             'create-your-account' => 'Create your account',
             'email'               => 'Email',
+            'phone'               => 'Telephone',
             'footer'              => '© Copyright 2010 - :current_year, Webkul Software (Registered in India). All rights reserved.',
             'forgot-pass'         => 'Forgot Password?',
             'form-login-text'     => 'If you have an account, sign in with your email address.',

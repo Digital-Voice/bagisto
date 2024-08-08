@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Webkul\Admin\DataGrids\Sales\CartDataGrid;
 use Webkul\Admin\DataGrids\Sales\OrderDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Resources\AddressResource;
@@ -46,6 +47,34 @@ class OrderController extends Controller
         $groups = $this->customerGroupRepository->findWhere([['code', '<>', 'guest']]);
 
         return view('admin::sales.orders.index', compact('groups'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function carts()
+    {
+        if (request()->ajax()) {
+            return datagrid(CartDataGrid::class)->process();
+        }
+
+        $groups = $this->customerGroupRepository->findWhere([['code', '<>', 'guest']]);
+
+        return view('admin::sales.carts.index', compact('groups'));
+    }
+
+    /**
+     * Show the view for the specified resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function cart(int $id)
+    {
+        $cart = $this->cartRepository->with('channel')->findOrFail($id);
+
+        return view('admin::sales.carts.view', compact('cart'));
     }
 
     /**

@@ -16,7 +16,7 @@ class CustomerController extends APIController
      */
     public function login(LoginRequest $request)
     {
-        if (! auth()->guard('customer')->attempt($request->only(['email', 'password']))) {
+        if (! auth()->guard('customer')->attempt($request->only(['phone', 'password']))) {
             return response()->json([
                 'message' => trans('shop::app.customers.login-form.invalid-credentials'),
             ], Response::HTTP_FORBIDDEN);

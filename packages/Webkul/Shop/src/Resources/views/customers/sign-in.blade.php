@@ -38,7 +38,7 @@
 
         <!-- Form Container -->
         <div class="m-auto w-full max-w-[870px] rounded-xl border border-zinc-200 p-16 px-[90px] max-md:px-8 max-md:py-8 max-sm:border-none max-sm:p-0">
-            <h1 class="font-dmserif text-4xl max-md:text-3xl max-sm:text-xl">
+            <h1 class="text-4xl font-dmserif max-md:text-3xl max-sm:text-xl">
                 @lang('shop::app.customers.login-form.page-title')
             </h1>
 
@@ -48,30 +48,30 @@
 
             {!! view_render_event('bagisto.shop.customers.login.before') !!}
 
-            <div class="mt-14 rounded max-sm:mt-8">
+            <div class="rounded mt-14 max-sm:mt-8">
                 <x-shop::form :action="route('shop.customer.session.create')">
 
                     {!! view_render_event('bagisto.shop.customers.login_form_controls.before') !!}
 
-                    <!-- Email -->
+                    <!-- Phone -->
                     <x-shop::form.control-group>
                         <x-shop::form.control-group.label class="required">
-                            @lang('shop::app.customers.login-form.email')
+                            @lang('shop::app.customers.login-form.phone')
                         </x-shop::form.control-group.label>
 
                         <x-shop::form.control-group.control
-                            type="email"
+                            type="text"
                             class="px-6 py-4 max-md:py-3 max-sm:py-2"
-                            name="email"
-                            rules="required|email"
+                            name="phone"
+                            rules="required"
                             value=""
-                            :label="trans('shop::app.customers.login-form.email')"
-                            placeholder="email@example.com"
-                            :aria-label="trans('shop::app.customers.login-form.email')"
+                            :label="trans('shop::app.customers.login-form.phone')"
+                            placeholder="01783110247"
+                            :aria-label="trans('shop::app.customers.login-form.phone')"
                             aria-required="true"
                         />
 
-                        <x-shop::form.control-group.error control-name="email" />
+                        <x-shop::form.control-group.error control-name="phone" />
                     </x-shop::form.control-group>
 
                     <!-- Password -->
@@ -101,17 +101,17 @@
                             <input
                                 type="checkbox"
                                 id="show-password"
-                                class="peer hidden"
+                                class="hidden peer"
                                 onchange="switchVisibility()"
                             />
 
                             <label
-                                class="icon-uncheck peer-checked:icon-check-box cursor-pointer text-2xl text-navyBlue peer-checked:text-navyBlue max-sm:text-xl"
+                                class="text-2xl cursor-pointer icon-uncheck peer-checked:icon-check-box text-navyBlue peer-checked:text-navyBlue max-sm:text-xl"
                                 for="show-password"
                             ></label>
 
                             <label
-                                class="cursor-pointer select-none text-base text-zinc-500 max-sm:text-sm ltr:pl-0 rtl:pr-0"
+                                class="text-base cursor-pointer select-none text-zinc-500 max-sm:text-sm ltr:pl-0 rtl:pr-0"
                                 for="show-password"
                             >
                                 @lang('shop::app.customers.login-form.show-password')
@@ -121,7 +121,7 @@
                         <div class="block">
                             <a
                                 href="{{ route('shop.customers.forgot_password.create') }}"
-                                class="cursor-pointer text-base text-black max-sm:text-sm"
+                                class="text-base text-black cursor-pointer max-sm:text-sm"
                             >
                                 <span>
                                     @lang('shop::app.customers.login-form.forgot-pass')
@@ -132,13 +132,13 @@
 
                     <!-- Captcha -->
                     @if (core()->getConfigData('customer.captcha.credentials.status'))
-                        <div class="mt-5 flex">
+                        <div class="flex mt-5">
                             {!! Captcha::render() !!}
                         </div>
                     @endif
 
                     <!-- Submit Button -->
-                    <div class="mt-8 flex flex-wrap items-center gap-9 max-sm:justify-center max-sm:gap-5 max-sm:text-center">
+                    <div class="flex flex-wrap items-center mt-8 gap-9 max-sm:justify-center max-sm:gap-5 max-sm:text-center">
                         <button
                             class="primary-button m-0 mx-auto block w-full max-w-[374px] rounded-2xl px-11 py-4 text-center text-base max-md:max-w-full max-md:rounded-lg max-md:py-3 max-sm:py-1.5 ltr:ml-0 rtl:mr-0"
                             type="submit"
@@ -165,7 +165,7 @@
             </p>
         </div>
 
-        <p class="mb-4 mt-8 text-center text-xs text-zinc-500">
+        <p class="mt-8 mb-4 text-xs text-center text-zinc-500">
             @lang('shop::app.customers.login-form.footer', ['current_year'=> date('Y') ])
         </p>
     </div>
