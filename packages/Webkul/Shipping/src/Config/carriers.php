@@ -22,8 +22,8 @@ return [
 
     'insidecity' => [
         'code'         => 'simple',
-        'title'        => null,
-        'description'  => 'Inside Dhaka',
+        'title'        => 'Inside Dhaka',
+        'description'  => 'Per order 70 taka',
         // 'active'       => true,
         'default_rate' => '70',
         'type'         => 'per_order',
@@ -32,8 +32,8 @@ return [
 
     'outsidecity' => [
         'code'         => 'simple',
-        'title'        => null,
-        'description'  => 'Outside Dhaka',
+        'title'        => 'Outside Dhaka',
+        'description'  => 'Per order 130 taka',
         // 'active'       => true,
         'default_rate' => '130',
         'type'         => 'per_order',
