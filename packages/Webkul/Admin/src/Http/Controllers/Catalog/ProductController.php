@@ -286,13 +286,14 @@ class ProductController extends Controller
     public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
         $productIds = $massUpdateRequest->input('indices');
+        $column = $massUpdateRequest->query('column', 'status');
 
         foreach ($productIds as $productId) {
             Event::dispatch('catalog.product.update.before', $productId);
 
             $product = $this->productRepository->update([
-                'status'  => $massUpdateRequest->input('value'),
-            ], $productId, ['status']);
+                $column => $massUpdateRequest->input('value'),
+            ], $productId, [$column]);
 
             Event::dispatch('catalog.product.update.after', $product);
         }

@@ -106,6 +106,10 @@ class OnepageController extends APIController
             ], Response::HTTP_FORBIDDEN);
         }
 
+        if (core()->getConfigData('sales.checkout.shopping_cart.allow_simple_checkout')) {
+            Cart::savePaymentMethod(['method' => 'cashondelivery']);
+        }
+
         Cart::collectTotals();
 
         return response()->json(Payment::getSupportedPaymentMethods());

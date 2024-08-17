@@ -19,14 +19,14 @@
         <x-shop::layouts.account.navigation />
     </div>
 
-    <div class="mx-4 flex-auto max-md:mx-6 max-sm:mx-4">
-        <div class="mb-8 flex items-center max-md:mb-5">
+    <div class="flex-auto mx-4 max-md:mx-6 max-sm:mx-4">
+        <div class="flex items-center mb-8 max-md:mb-5">
             <!-- Back Button -->
             <a
                 class="grid md:hidden"
                 href="{{ route('shop.customers.account.addresses.index') }}"
             >
-                <span class="icon-arrow-left rtl:icon-arrow-right text-2xl"></span>
+                <span class="text-2xl icon-arrow-left rtl:icon-arrow-right"></span>
             </a>
 
             <h2 class="text-2xl font-medium max-sm:text-base ltr:ml-2.5 md:ltr:ml-0 rtl:mr-2.5 md:rtl:mr-0">
@@ -119,14 +119,14 @@
 
                 <!-- E-mail -->
                 <x-shop::form.control-group>
-                    <x-shop::form.control-group.label class="required">
+                    <x-shop::form.control-group.label>
                         @lang('Email')
                     </x-shop::form.control-group.label>
 
                     <x-shop::form.control-group.control
                         type="text"
                         name="email"
-                        rules="required|email"
+                        rules="email"
                         :value="old('email') ?? $address->email"
                         :label="trans('Email')"
                         :placeholder="trans('Email')"

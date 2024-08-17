@@ -768,6 +768,7 @@ return [
                     'copy-of'                => 'Copy Of :value',
                     'delete'                 => 'Delete',
                     'disable'                => 'Disable',
+                    'guest-checkout'         => 'Guest Checkout',
                     'id-value'               => 'Id - :id',
                     'id'                     => 'Id',
                     'image'                  => 'Image',
@@ -3666,11 +3667,23 @@ return [
                         'title-info' => 'Requirements are the conditions, features, or specifications necessary for something to be fulfilled, achieved, or met successfully.',
                         'zip'        => 'Zip',
                     ],
+                    
+                    'display' => [
+                        'city' => 'City',
+                        'company-name' => 'Company Name',
+                        'country' => 'Country',
+                        'email' => 'Email',
+                        'state' => 'State',
+                        'title-info' => 'Display or hide the company name, email, city, state, country, and zip code in the address.',
+                        'title' => 'Display',
+                        'zip' => 'Zip',
+                    ],
 
                     'information' => [
+                        'split-name'   => 'Split Name',
                         'street-lines' => 'Lines in a Street Address',
                         'title'        => 'Information',
-                        'title-info'   => '"Lines in a street address" refer to individual segments of an address, often separated by commas, providing location information such as house number, street, city, and more.',
+                        'title-info'   => '"Split Name" refers to the division of a full name into first name and last name.<br><br>"Lines in a street address" refer to individual segments of an address, often separated by commas, providing location information such as house number, street, city, and more.',
                     ],
                 ],
 
@@ -3833,6 +3846,27 @@ return [
                         'description' => 'Description',
                         'page-title'  => 'Flat Rate Shipping',
                         'rate'        => 'Rate',
+                        'status'      => 'Status',
+                        'title'       => 'Title',
+                        'title-info'  => 'Flat rate shipping is a shipping method where a fixed fee is charged for shipping, regardless of the weight, size, or distance of the package. This simplifies shipping costs and can be advantageous for both buyers and sellers.',
+                        'type'        => [
+                            'per-order' => 'Per Order',
+                            'per-unit'  => 'Per Unit',
+                            'title'     => 'Type',
+                        ],
+                    ],
+
+                    'simple-shipping' => [
+                        'cost'        => [
+                            'inside-city' => 'Inside City Cost',
+                            'outside-city' => 'Outside City Cost',
+                        ],
+                        'description' => 'Description',
+                        'label'       => [
+                            'inside-city' => 'Inside City Label',
+                            'outside-city' => 'Outside City Label',
+                        ],
+                        'page-title'  => 'Simple Shipping',
                         'status'      => 'Status',
                         'title'       => 'Title',
                         'title-info'  => 'Flat rate shipping is a shipping method where a fixed fee is charged for shipping, regardless of the weight, size, or distance of the package. This simplifies shipping costs and can be advantageous for both buyers and sellers.',
@@ -4029,6 +4063,8 @@ return [
                         'guest-checkout'         => 'Allow guest checkout',
                         'guest-checkout-info'    => 'Enable guest checkout for a faster, hassle-free purchase process.',
                         'info'                   => 'Enable guest checkout, cart page, cross-sell products, and estimated shipping to enhance user convenience and streamline the shopping process for increased sales.',
+                        'simple-checkout'        => 'Allow simple checkout',
+                        'simple-checkout-info'   => 'Enable simple checkout for a faster, hassle-free purchase process.',
                         'title'                  => 'Shopping Cart',
                     ],
 

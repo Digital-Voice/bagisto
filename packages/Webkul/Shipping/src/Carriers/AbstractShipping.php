@@ -29,7 +29,7 @@ abstract class AbstractShipping
      */
     public function isAvailable()
     {
-        return $this->getConfigData('active');
+        return $this->getConfigData('active') && ! core()->getConfigData('sales.checkout.shopping_cart.allow_simple_checkout');
     }
 
     /**

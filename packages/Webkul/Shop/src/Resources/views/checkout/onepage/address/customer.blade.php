@@ -350,6 +350,7 @@
                     selectedAddressForEdit: {
                         id: 0,
                         company_name: '',
+                        full_name: this.fullName,
                         first_name: this.cart.customer_first_name,
                         last_name: this.cart.customer_last_name,
                         email: this.cart.customer_email,
@@ -373,6 +374,10 @@
 
                     isStoring: false,
                 }
+            },
+            
+            computed: {
+                fullName: () => this.selectedAddressForEdit.first_name + ' ' + this.selectedAddressForEdit.last_name,
             },
 
             created() {

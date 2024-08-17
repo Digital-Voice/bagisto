@@ -253,6 +253,21 @@ class ProductDataGrid extends DataGrid
                     ],
                 ],
             ]);
+            $this->addMassAction([
+                'title'   => trans('admin::app.catalog.products.index.datagrid.guest-checkout'),
+                'url'     => route('admin.catalog.products.mass_update', ['column' => 'guest_checkout']),
+                'method'  => 'POST',
+                'options' => [
+                    [
+                        'label' => trans('admin::app.catalog.products.index.datagrid.active'),
+                        'value' => 1,
+                    ],
+                    [
+                        'label' => trans('admin::app.catalog.products.index.datagrid.disable'),
+                        'value' => 0,
+                    ],
+                ],
+            ]);
         }
     }
 

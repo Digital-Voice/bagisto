@@ -13,7 +13,7 @@ class LoginRequest extends FormRequest
      * @var array
      */
     private $rules = [
-        'phone'    => 'required',
+        'phone'    => 'required|',
         'password' => 'required|min:6',
     ];
 

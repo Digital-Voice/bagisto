@@ -54,9 +54,9 @@
                                             v-model="phone"
                                             rules="required"
                                             :value="old('phone')"
-                                            :label="trans('Telephone')"
+                                            :label="trans('shop::app.checkout.onepage.address.telephone')"
                                             placeholder="01783110247"
-                                            :aria-label="trans('Telephone')"
+                                            :aria-label="trans('shop::app.checkout.onepage.address.telephone')"
                                             aria-required="true"
                                         />
                                     </div>
@@ -125,6 +125,12 @@
             action() {
                 if (!this.phone) {
                     this.$emitter.emit('add-flash', { type: 'error', message: "@lang('Phone number is required')" });
+
+                    return;
+                }
+
+                if (!/^(?:01\d{9})$/.test(this.phone)) {
+                    this.$emitter.emit('add-flash', { type: 'error', message: "@lang('Invalid phone number')" });
 
                     return;
                 }

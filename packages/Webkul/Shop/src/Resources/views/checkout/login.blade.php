@@ -1,7 +1,7 @@
 <!-- Checkout Login Vue JS Component -->
 <v-checkout-login>
     <div class="flex items-center">
-        <span class="cursor-pointer text-base font-medium text-blue-700">
+        <span class="text-base font-medium text-blue-700 cursor-pointer">
             @lang('shop::app.checkout.login.title')
         </span>
     </div>
@@ -15,7 +15,7 @@
         <div>
             <div class="flex items-center">
                 <span
-                    class="cursor-pointer text-base font-medium text-blue-700"
+                    class="text-base font-medium text-blue-700 cursor-pointer"
                     role="button"
                     @click="$refs.loginModel.open()"
                 >
@@ -47,21 +47,21 @@
                         <x-slot:content>
                             <x-shop::form.control-group>
                                 <x-shop::form.control-group.label class="required">
-                                    @lang('shop::app.checkout.login.email')
+                                    @lang('shop::app.checkout.login.phone')
                                 </x-shop::form.control-group.label>
 
                                 <x-shop::form.control-group.control
-                                    type="email"
+                                    type="text"
                                     class="px-6 py-4"
-                                    name="email"
-                                    rules="required|email"
-                                    :label="trans('shop::app.checkout.login.email')"
-                                    placeholder="email@example.com"
-                                    :aria-label="trans('shop::app.checkout.login.email')"
+                                    name="phone"
+                                    rules="required"
+                                    :label="trans('shop::app.checkout.login.phone')"
+                                    placeholder="01783110247"
+                                    :aria-label="trans('shop::app.checkout.login.phone')"
                                     aria-required="true"
                                 />
 
-                                <x-shop::form.control-group.error control-name="email" />
+                                <x-shop::form.control-group.error control-name="phone" />
                             </x-shop::form.control-group>
 
                             <x-shop::form.control-group class="!mb-0">

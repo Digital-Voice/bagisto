@@ -19,4 +19,24 @@ return [
         'default_rate' => '0',
         'class'        => 'Webkul\Shipping\Carriers\Free',
     ],
+
+    'insidecity' => [
+        'code'         => 'simple',
+        'title'        => null,
+        'description'  => 'Inside Dhaka',
+        // 'active'       => true,
+        'default_rate' => '70',
+        'type'         => 'per_order',
+        'class'        => 'Webkul\Shipping\Carriers\InsideCity',
+    ],
+
+    'outsidecity' => [
+        'code'         => 'simple',
+        'title'        => null,
+        'description'  => 'Outside Dhaka',
+        // 'active'       => true,
+        'default_rate' => '130',
+        'type'         => 'per_order',
+        'class'        => 'Webkul\Shipping\Carriers\OutsideCity',
+    ],
 ];

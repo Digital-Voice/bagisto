@@ -3,6 +3,7 @@
 namespace Webkul\Shop\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
 use Webkul\Core\Rules\PhoneNumber;
 
 class CartAddressRequest extends FormRequest
@@ -45,6 +46,12 @@ class CartAddressRequest extends FormRequest
      */
     private function mergeAddressRules(string $addressType)
     {
+        if (core()->getConfigData('customer.address.information.split-name')) {
+            $this->mergeWithRules([
+                "{$addressType}.full_name" => ["required"],
+            ]);
+        }
+
         $this->mergeWithRules([
             "{$addressType}.company_name" => ['nullable'],
             "{$addressType}.first_name"   => ['required'],
@@ -65,5 +72,27 @@ class CartAddressRequest extends FormRequest
     private function mergeWithRules($rules): void
     {
         $this->rules = array_merge($this->rules, $rules);
+    }
+
+    protected function prepareForValidation()
+    {
+        if (! core()->getConfigData('customer.address.information.split-name')) {
+            foreach (Arr::get($this->billing, 'use_for_shipping') ? ['billing'] : ['billing', 'shipping'] as $type) {
+                $parts = explode(' ', $fullName = Arr::get($this->$type, 'full_name'));
+
+                $this->merge([$type => array_merge($this->$type, [
+                    'last_name' => count($parts) == 1 ? $fullName : array_pop($parts),
+                    'first_name' => count($parts) == 1 ? '-' : implode(' ', $parts),
+                ])]);
+            }
+        }
+
+        if (! core()->getConfigData('customer.address.display.city')) {
+            $this->merge(['billing' => array_merge($this->billing, ['city' => '-'])]);
+
+            if (! Arr::get($this->billing, 'use_for_shipping')) {
+                $this->merge(['shipping' => array_merge($this->shipping, ['city' => '-'])]);
+            }
+        }
     }
 }

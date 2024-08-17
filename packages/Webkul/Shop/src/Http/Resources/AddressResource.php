@@ -21,6 +21,7 @@ class AddressResource extends JsonResource
             'customer_id'       => $this->customer_id,
             'cart_id'           => $this->cart_id,
             'order_id'          => $this->order_id,
+            'full_name'         => $this->first_name . ' ' . $this->last_name,
             'first_name'        => $this->first_name,
             'last_name'         => $this->last_name,
             'gender'            => $this->gender,

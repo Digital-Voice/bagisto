@@ -434,6 +434,10 @@
 
                 addToCart(params) {
                     if (! localStorage.getItem('customer_phone')) {
+                        localStorage.setItem('customer_phone', '{{auth()->user()?->phone}}');
+                    }
+
+                    if (! localStorage.getItem('customer_phone')) {
                         return this.$emitter.emit('open-phone-number-modal', {                            
                             action: () => this.pleaseAddToCart(params),
                             cancel: () => {},

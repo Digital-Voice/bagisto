@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\MagicAI\Facades\MagicAI;
 use Webkul\Sales\Repositories\OrderRepository;
+use Webkul\Shipping\Facades\Shipping;
 
 class OnepageController extends Controller
 {

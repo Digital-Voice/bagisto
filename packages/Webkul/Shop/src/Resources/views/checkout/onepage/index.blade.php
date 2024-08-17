@@ -94,7 +94,7 @@
                         </template>
 
                         <!-- Included Payment Methods Blade File -->
-                        <template v-if="['payment', 'review'].includes(currentStep)">
+                        <template v-if="!allowSimpleCheckout && ['payment', 'review'].includes(currentStep)">
                             @include('shop::checkout.onepage.payment')
                         </template>
                     </div>
@@ -141,6 +141,8 @@
                 data() {
                     return {
                         cart: null,
+
+                        allowSimpleCheckout: {{ core()->getConfigData('sales.checkout.shopping_cart.allow_simple_checkout') }},
 
                         displayTax: {
                             prices: "{{ core()->getConfigData('sales.taxes.shopping_cart.display_prices') }}",
@@ -192,6 +194,10 @@
                             this.shippingMethods = null;
                         } else if (this.currentStep == 'payment') {
                             this.paymentMethods = null;
+
+                            if (this.allowSimpleCheckout) {
+                                this.stepForward('review');
+                            }
                         }
                     },
 

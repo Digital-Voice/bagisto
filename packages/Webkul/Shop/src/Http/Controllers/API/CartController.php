@@ -47,6 +47,10 @@ class CartController extends APIController
      */
     public function store()
     {
+        if (auth()->check()) {
+            request()->merge(['phone' => auth()->user()->phone]);
+        }
+
         $this->validate(request(), [
             'product_id' => 'required|integer|exists:products,id',
             'phone' => 'required',
