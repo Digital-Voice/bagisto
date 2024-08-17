@@ -80,10 +80,15 @@ class CartAddressRequest extends FormRequest
             foreach (Arr::get($this->billing, 'use_for_shipping') ? ['billing'] : ['billing', 'shipping'] as $type) {
                 $parts = explode(' ', $fullName = Arr::get($this->$type, 'full_name'));
 
-                $this->merge([$type => array_merge($this->$type, [
-                    'last_name' => count($parts) == 1 ? $fullName : array_pop($parts),
-                    'first_name' => count($parts) == 1 ? '-' : implode(' ', $parts),
-                ])]);
+                $name = count($parts) == 1 ? [
+                    'last_name' => '-',
+                    'first_name' => $fullName,
+                ] : [
+                    'last_name' => array_pop($parts),
+                    'first_name' => implode(' ', $parts),
+                ];
+
+                $this->merge([$type => array_merge($this->$type, $name)]);
             }
         }
 
