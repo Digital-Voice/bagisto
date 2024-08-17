@@ -3,6 +3,7 @@
 <!-- Guest Address Vue Component -->
 <v-checkout-address-guest
     :cart="cart"
+    :current-step="currentStep"
     @processing="stepForward"
     @processed="stepProcessed"
 ></v-checkout-address-guest>
@@ -55,7 +56,7 @@
                         />
 
                         <label
-                            class="cursor-pointer select-none text-base text-zinc-500 max-md:text-sm max-sm:text-xs ltr:pl-0 rtl:pr-0"
+                            class="text-base cursor-pointer select-none text-zinc-500 max-md:text-sm max-sm:text-xs ltr:pl-0 rtl:pr-0"
                             for="use_for_shipping"
                         >
                             @lang('shop::app.checkout.onepage.address.same-as-billing')
@@ -91,9 +92,9 @@
                 </template>
 
                 <!-- Proceed Button -->
-                <div class="mt-4 flex justify-end">
+                <div v-if="currentStep=='address'" class="flex justify-end mt-4">
                     <x-shop::button
-                        class="primary-button rounded-2xl px-11 py-3 max-md:w-full max-md:max-w-full max-md:rounded-lg"
+                        class="py-3 primary-button rounded-2xl px-11 max-md:w-full max-md:max-w-full max-md:rounded-lg"
                         :title="trans('shop::app.checkout.onepage.address.proceed')"
                         ::loading="isStoring"
                         ::disabled="isStoring"
@@ -107,7 +108,7 @@
         app.component('v-checkout-address-guest', {
             template: '#v-checkout-address-guest-template',
 
-            props: ['cart'],
+            props: ['cart', 'currentStep'],
 
             emits: ['processing', 'processed'],
 
